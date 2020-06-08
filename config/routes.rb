@@ -1,3 +1,4 @@
 Rails.application.routes.draw do
-  post "/" => "orders#parse"
+  root to: "orders#index"
+  post "/" => "orders#create"
 end
