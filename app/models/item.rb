@@ -5,5 +5,6 @@ class Item < ApplicationRecord
     validates :quantity, presence: true
     validates :total, presence: true
 
+    belongs_to :integration_process
     has_many :items, as: :sub_items
 end

@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2020_06_07_191734) do
   end
 
   create_table "items", force: :cascade do |t|
-    t.integer "parent_item_id"
+    t.integer "integration_process_id"
     t.integer "items_id"
     t.string "external_code"
     t.string "name"
@@ -53,14 +53,17 @@ ActiveRecord::Schema.define(version: 2020_06_07_191734) do
     t.float "total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["integration_process_id"], name: "index_items_on_integration_process_id"
     t.index ["items_id"], name: "index_items_on_items_id"
   end
 
   create_table "payments", force: :cascade do |t|
+    t.integer "integration_process_id"
     t.string "payment_type"
     t.float "value"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["integration_process_id"], name: "index_payments_on_integration_process_id"
   end
 
   create_table "stores", force: :cascade do |t|

@@ -61,43 +61,14 @@ class IntegrationProcessesController < ApplicationController
         case response
             when Net::HTTPSuccess then
                 ActiveRecord::Base.transaction do
+                    store = Store.find_or_create_by({
+                        id: params[:store_id]
+                    }).save
+
                     customer_data = {}
                     data[:customer].each {|key,value| customer_data[key.to_s.underscore.to_sym] = value}
                     customer = Customer.find_or_create_by(customer_data)
                     errors[:customer] = customer.errors unless customer.save
-
-                    items = []
-                    data[:items].each do |item|
-                        item_data = {}
-                        item.each do |key, value|
-                            next if [:subItems].include? key
-                            item_data[key.to_s.underscore.to_sym] = value
-                        end
-                        item = Item.new(item_data)
-                        if item.save
-                            items << item
-                        else
-                            errors[:items] = item.errors 
-                        end
-                    end
-
-                    payments = []
-                    data[:payments].each do |payment|
-                        payment_data = {}
-                        payment.each do |key, value|
-                            if key == :type
-                                payment_data[:payment_type] = value
-                            else
-                                payment_data[key.to_s.underscore.to_sym] = value
-                            end
-                        end
-                        payment = Payment.new(payment_data)
-                        if payment.save
-                            payments << payment
-                        else
-                            errors[:payments] = payment.errors 
-                        end
-                    end
 
                     process_data = {}
                     data.each do |key,value|
@@ -107,9 +78,35 @@ class IntegrationProcessesController < ApplicationController
                     integration_process = IntegrationProcess.new(process_data)
                     integration_process.customer = customer
                     errors[:process] = integration_process.errors unless integration_process.save
-                    integration_process.items = items
-                    integration_process.payments = payments
-                    errors[:process] = integration_process.errors unless integration_process.save
+
+                    items = []
+                    data[:items].each do |item|
+                        errors[:items] = [] if errors[:items].nil?
+                        item_data = {}
+                        item.each do |key, value|
+                            next if [:subItems].include? key
+                            item_data[key.to_s.underscore.to_sym] = value
+                        end
+                        item = Item.new(item_data)
+                        item.integration_process = integration_process
+                        errors[:items] << item.errors unless item.save
+                    end
+
+                    payments = []
+                    data[:payments].each do |payment|
+                        errors[:payments] = [] if errors[:payments].nil?
+                        payment_data = {}
+                        payment.each do |key, value|
+                            if key == :type
+                                payment_data[:payment_type] = value
+                            else
+                                payment_data[key.to_s.underscore.to_sym] = value
+                            end
+                        end
+                        payment = Payment.new(payment_data)
+                        payment.integration_process = integration_process
+                        errors[:payments] << payment.errors unless payment.save
+                    end
 
                     raise ActiveRecord::Rollback unless errors.empty?
                 end

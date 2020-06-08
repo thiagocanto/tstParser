@@ -17,17 +17,8 @@ class IntegrationProcess < ApplicationRecord
     validates :dt_order_create, presence: true
     validates :postal_code, presence: true
     validates :number, presence: true
-    validates :customer, presence: true
-    validates :items, presence: true
-    validates :payments, presence: true
 
     belongs_to :customer
     has_many :items
     has_many :payments
-    accepts_nested_attributes_for :customer, :items, :payments
-
-    after_initialize do |integration_process|
-        Rails.logger.debug(integration_process.inspect)
-    end
-
 end
