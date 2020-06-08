@@ -17,7 +17,7 @@ module OrdersHelper
             longitude: info.dig(:shipping, :receiver_address, :longitude),
             dtOrderCreate: DateTime.now,
             postalCode: info.dig(:shipping, :receiver_address, :zip_code),
-            number: "0",
+            number: info.dig(:shipping, :receiver_address, :street_number),
             customer: {
                 externalCode: info.dig(:buyer, :id),
                 name: info.dig(:buyer, :nickname),

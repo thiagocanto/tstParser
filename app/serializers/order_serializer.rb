@@ -1,5 +1,5 @@
 class OrderSerializer < ActiveModel::Serializer
-    attributes :externalCode, :storeId
+    attributes :externalCode, :storeId, :subTotal, :deliveryFee, :total, :country, :state, :city, :district, :street, :complement, :latitude, :longitude, :dtOrderCreate, :postalCode, :number
 
     attributes :customer, :items, :payments
 
@@ -8,6 +8,18 @@ class OrderSerializer < ActiveModel::Serializer
     end
     def storeId
         object.store_id
+    end
+    def subTotal
+        object.sub_total
+    end
+    def deliveryFee
+        object.delivery_fee
+    end
+    def dtOrderCreate
+        object.dt_order_create
+    end
+    def postalCode
+        object.postal_code
     end
 
     def customer
@@ -33,8 +45,6 @@ class OrderSerializer < ActiveModel::Serializer
     end
 
     def payments
-        Rails.logger.info(object.payments.inspect)
-        return [] if object.payments.nil?
         object.payments.collect do |payment|
             {
                 type: payment.payment_type,

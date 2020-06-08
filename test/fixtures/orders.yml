@@ -1,0 +1,18 @@
+one: {
+  external_code: "000000001",
+  store_id: 282,
+  sub_total: 10,
+  delivery_fee: 5,
+  total: 15,
+  country: "BR",
+  state: "PR",
+  city: "Curitiba",
+  district: "Bacacheri",
+  street: "Rua teste",
+  complement: "Apto 1",
+  latitude: -23.629037,
+  longitude: -46.712689,
+  dt_order_create: <%= Date.current - 1.day %>,
+  postal_code: "93020020",
+  number: "34"
+}

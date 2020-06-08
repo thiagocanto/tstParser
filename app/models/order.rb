@@ -1,6 +1,4 @@
 class Order < ApplicationRecord
-    attr_accessor :shipping, :buyer, :order_items, :payments
-
     validates :external_code, presence: true
     validates :store_id, presence: true
     validates :sub_total, presence: true
