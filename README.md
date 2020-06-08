@@ -1,24 +1,25 @@
-# README
+# Processador de compra
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Parser desenvolvido para receber um pedido de compra por integração e salvar no sistema local, possibilitando a consulta pelo sistema
 
-Things you may want to cover:
 
-* Ruby version
+### Instalando
 
-* System dependencies
+Para instalar o parser, é necessário fazer a instalação dos pacotes.
+Na pasta do projeto, após sua clonagem, rodar a sequência de comandos:
 
-* Configuration
+```
+bundle install
+yarn install
+rake db:setup
+rake db:migrate
+```
 
-* Database creation
+### Executar a aplicação
 
-* Database initialization
+Com esses comandos, o ambiente estará pronto para rodar, executando o comando
+```
+rails s
+```
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Após isso, a aplicação estará pronta para receber requisições **POST** com as compras
