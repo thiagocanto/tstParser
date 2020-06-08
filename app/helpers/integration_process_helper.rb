@@ -1,0 +1,2 @@
+module IntegrationProcessHelper
+end
