@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  post "/" => "integration_processes#parse"
+  post "/" => "orders#parse"
 end

@@ -6,6 +6,6 @@ class CreateStores < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_foreign_key :integration_processes, :stores, on_delete: :cascade
+    add_foreign_key :orders, :stores, on_delete: :cascade
   end
 end

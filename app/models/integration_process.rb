@@ -1,4 +1,4 @@
-class IntegrationProcess < ApplicationRecord
+class Order < ApplicationRecord
     attr_accessor :shipping, :buyer, :order_items, :payments
 
     validates :external_code, presence: true

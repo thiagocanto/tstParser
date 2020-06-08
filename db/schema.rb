@@ -21,7 +21,21 @@ ActiveRecord::Schema.define(version: 2020_06_07_191734) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "integration_processes", force: :cascade do |t|
+  create_table "items", force: :cascade do |t|
+    t.integer "integration_process_id"
+    t.integer "items_id"
+    t.string "external_code"
+    t.string "name"
+    t.float "price"
+    t.integer "quantity"
+    t.float "total"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["integration_process_id"], name: "index_items_on_integration_process_id"
+    t.index ["items_id"], name: "index_items_on_items_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
     t.string "external_code"
     t.integer "store_id"
     t.float "sub_total"
@@ -43,20 +57,6 @@ ActiveRecord::Schema.define(version: 2020_06_07_191734) do
     t.integer "customer_id"
   end
 
-  create_table "items", force: :cascade do |t|
-    t.integer "integration_process_id"
-    t.integer "items_id"
-    t.string "external_code"
-    t.string "name"
-    t.float "price"
-    t.integer "quantity"
-    t.float "total"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["integration_process_id"], name: "index_items_on_integration_process_id"
-    t.index ["items_id"], name: "index_items_on_items_id"
-  end
-
   create_table "payments", force: :cascade do |t|
     t.integer "integration_process_id"
     t.string "payment_type"
@@ -72,6 +72,6 @@ ActiveRecord::Schema.define(version: 2020_06_07_191734) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "integration_processes", "customers", on_delete: :cascade
-  add_foreign_key "integration_processes", "stores", on_delete: :cascade
+  add_foreign_key "orders", "customers", on_delete: :cascade
+  add_foreign_key "orders", "stores", on_delete: :cascade
 end

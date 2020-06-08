@@ -9,7 +9,7 @@ class CreateCustomers < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_column :integration_processes, :customer_id, :integer, after: :store_id
-    add_foreign_key :integration_processes, :customers, on_delete: :cascade
+    add_column :orders, :customer_id, :integer, after: :store_id
+    add_foreign_key :orders, :customers, on_delete: :cascade
   end
 end

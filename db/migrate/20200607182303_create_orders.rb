@@ -1,6 +1,6 @@
-class CreateIntegrationProcesses < ActiveRecord::Migration[6.0]
+class CreateOrders < ActiveRecord::Migration[6.0]
   def change
-    create_table :integration_processes do |t|
+    create_table :orders do |t|
       t.string :external_code
       t.integer :store_id
       t.float :sub_total
