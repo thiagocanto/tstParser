@@ -6,6 +6,7 @@ Parser desenvolvido para receber um pedido de compra por integração e salvar n
 ### Instalando
 
 Para instalar o parser, é necessário fazer a instalação dos pacotes.
+
 Na pasta do projeto, após sua clonagem, rodar a sequência de comandos:
 
 ```
@@ -17,7 +18,7 @@ rake db:migrate
 
 ### Executar a aplicação
 
-Com esses comandos, o ambiente estará pronto para rodar, executando o comando
+O ambiente estará pronto para funcionar executando o comando
 ```
 rails s
 ```
