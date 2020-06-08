@@ -81,7 +81,6 @@ class IntegrationProcessesController < ApplicationController
 
                     items = []
                     data[:items].each do |item|
-                        errors[:items] = [] if errors[:items].nil?
                         item_data = {}
                         item.each do |key, value|
                             next if [:subItems].include? key
@@ -89,12 +88,14 @@ class IntegrationProcessesController < ApplicationController
                         end
                         item = Item.new(item_data)
                         item.integration_process = integration_process
-                        errors[:items] << item.errors unless item.save
+                        unless item.save
+                            errors[:items] = [] if errors[:items].nil?
+                            errors[:items] << item.errors
+                        end
                     end
 
                     payments = []
                     data[:payments].each do |payment|
-                        errors[:payments] = [] if errors[:payments].nil?
                         payment_data = {}
                         payment.each do |key, value|
                             if key == :type
@@ -105,7 +106,10 @@ class IntegrationProcessesController < ApplicationController
                         end
                         payment = Payment.new(payment_data)
                         payment.integration_process = integration_process
-                        errors[:payments] << payment.errors unless payment.save
+                        unless payment.save
+                            errors[:payments] = [] if errors[:payments].nil?
+                            errors[:payments] << payment.errors
+                        end
                     end
 
                     raise ActiveRecord::Rollback unless errors.empty?
