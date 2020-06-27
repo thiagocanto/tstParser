@@ -14,6 +14,7 @@ bundle install
 yarn install
 rake db:setup
 rake db:migrate
+rake db:fixtures:load
 ```
 
 ### Executar a aplicação
@@ -23,4 +24,4 @@ O ambiente estará pronto para funcionar executando o comando
 rails s
 ```
 
-Após isso, a aplicação estará pronta para receber requisições **POST** com as compras
+Após isso, a aplicação estará pronta para receber requisições **POST** com a compra
