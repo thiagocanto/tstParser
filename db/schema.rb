@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_07_191734) do
+ActiveRecord::Schema.define(version: 2020_06_27_043617) do
 
   create_table "customers", force: :cascade do |t|
     t.string "external_code"
@@ -22,17 +22,24 @@ ActiveRecord::Schema.define(version: 2020_06_07_191734) do
   end
 
   create_table "items", force: :cascade do |t|
-    t.integer "order_id"
-    t.integer "items_id"
+    t.integer "item_id"
     t.string "external_code"
     t.string "name"
     t.float "price"
-    t.integer "quantity"
     t.float "total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["items_id"], name: "index_items_on_items_id"
-    t.index ["order_id"], name: "index_items_on_order_id"
+    t.index ["item_id"], name: "index_items_on_item_id"
+  end
+
+  create_table "order_items", force: :cascade do |t|
+    t.integer "order_id"
+    t.integer "item_id"
+    t.integer "quantity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["item_id"], name: "index_order_items_on_item_id"
+    t.index ["order_id"], name: "index_order_items_on_order_id"
   end
 
   create_table "orders", force: :cascade do |t|

@@ -1,7 +1,9 @@
 class OrderSerializer < ActiveModel::Serializer
     attributes :externalCode, :storeId, :subTotal, :deliveryFee, :total, :country, :state, :city, :district, :street, :complement, :latitude, :longitude, :dtOrderCreate, :postalCode, :number
 
-    attributes :customer, :items, :payments
+    attributes :items
+    belongs_to :customer
+    has_many :payments
 
     def externalCode
         object.external_code
@@ -22,33 +24,17 @@ class OrderSerializer < ActiveModel::Serializer
         object.postal_code
     end
 
-    def customer
-        {
-            externalCode: object.customer.external_code,
-            name: object.customer.name,
-            email: object.customer.email,
-            contact: object.customer.contact
-        }
-    end
-
     def items
         object.items.collect do |item|
+            quantity = item.order_items.where(order_id: object.id).first.quantity
+
             {
                 externalCode: item.external_code,
                 name: item.name,
                 price: item.price,
-                quantity: item.quantity,
-                total: item.total,
+                quantity: quantity,
+                total: item.price * quantity,
                 subItems: []
-            }
-        end
-    end
-
-    def payments
-        object.payments.collect do |payment|
-            {
-                type: payment.payment_type,
-                value: payment.value
             }
         end
     end
