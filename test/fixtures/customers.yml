@@ -1,5 +1,6 @@
 one: {
   id: 1,
+  external_code: "00001",
   name: "TESTE",
   email: "email@teste.com",
   contact: "41999999999"

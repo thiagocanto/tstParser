@@ -8,7 +8,7 @@ class Item < ApplicationRecord
     has_many :items, as: :sub_items
 
     def self.add_to_order(data, order)
-        quantity = data.extract!(:quantity)[:quantity]
+        quantity = data.extract!(:quantity)[:quantity] || 1
 
         item = find_by(external_code: data[:external_code])
         item = new(data) if item.nil?
